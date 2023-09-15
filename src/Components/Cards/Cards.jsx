@@ -9,48 +9,38 @@ const Cards = () => {
   const [selectCard, setSelectCard] = useState([]);
   const [remaining, setRemaining] = useState(20);
   const [totalCredit, setTotalCredit] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     fetch("api.json")
       .then((res) => res.json())
       .then((data) => setCards(data));
   }, []);
 
+  const handleSelect = (card) => {
+    const isExist = selectCard.find((item) => item.id == card.id);
+    let count = card.credit;
+    let price = card.price;
+    if (isExist) {
+      alert(
+        "You have already selected these Course Please select another one."
+      );
+    } else {
+      selectCard.forEach((item) => {
+        count = count + item.credit;
+        price = price + item.price;
+      });
 
-
-
-
-
-  
-    const handleSelect = (card) => {
-      const isExist = selectCard.find((item) => item.id == card.id);
-      let count = 0;
-      if (isExist) {
-        alert(
-          "You have already selected these Course Please select another one."
-        );
+      const totalRemaining = 20 - count;
+      if (count > 20) {
+        alert("You do not have enough credit");
       } else {
-        selectCard.forEach((item) => {
-          count = count + item.credit;
-        });
-        const totalRemaining = 20 - count;
-        if(count > 20){
-            alert('You do not have enough Credit')
-        }
-        else{
-            setTotalCredit(count);
-            setRemaining(totalRemaining);
-            setSelectCard([...selectCard, card]);
-        }
+        setTotalCredit(count);
+        setTotalPrice(price);
+        setRemaining(totalRemaining);
+        setSelectCard([...selectCard, card]);
       }
-      console.log(selectCard);
-    };
-
-
-
-
-
-
-
+    }
+  };
 
   return (
     <div className="">
@@ -91,7 +81,12 @@ const Cards = () => {
             </div>
           ))}
         </div>
-        <Cart remaining={remaining} ></Cart>
+        <Cart
+          selectCard={selectCard}
+          totalCredit={totalCredit}
+          remaining={remaining}
+          totalPrice={totalPrice}
+        ></Cart>
       </div>
     </div>
   );
