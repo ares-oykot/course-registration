@@ -3,6 +3,7 @@ import { useState } from "react";
 import Cart from "../Cart/Cart";
 import Dollar from "../../assets/dollar-sign 1.png";
 import Frame from "../../assets/Frame.png";
+import Swal from 'sweetalert2'
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
@@ -20,9 +21,12 @@ const Cards = () => {
     const isExist = selectCard.find((item) => item.id == card.id);
     let count = card.credit;
     if (isExist) {
-      alert(
-        "You have already selected these Course Please select another one."
-      );
+      Swal.fire({
+        icon: 'error',
+        title: 'Sorry',
+        text: 'You have already selected this Course Please choose another one.',
+        footer: '<a href="">Report</a>'
+      });
     } else {
       selectCard.forEach((item) => {
         count = count + item.credit;
@@ -30,7 +34,7 @@ const Cards = () => {
 
       const totalRemaining = 20 - count;
       if (count > 20) {
-        alert("You do not have enough credit");
+        alert('error')
       } else {
         setTotalCredit(count);
         setTotalPrice(totalPrice + card.price);
