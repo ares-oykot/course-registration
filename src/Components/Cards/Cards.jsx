@@ -34,7 +34,12 @@ const Cards = () => {
 
       const totalRemaining = 20 - count;
       if (count > 20) {
-        alert('error')
+        Swal.fire({
+          icon: 'error',
+          title: 'Sorry',
+          text: "You don't have enough credit.",
+          footer: '<a href="">Report</a>'
+        });
       } else {
         setTotalCredit(count);
         setTotalPrice(totalPrice + card.price);
