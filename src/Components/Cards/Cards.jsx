@@ -19,7 +19,6 @@ const Cards = () => {
   const handleSelect = (card) => {
     const isExist = selectCard.find((item) => item.id == card.id);
     let count = card.credit;
-    let price = card.price;
     if (isExist) {
       alert(
         "You have already selected these Course Please select another one."
@@ -27,7 +26,6 @@ const Cards = () => {
     } else {
       selectCard.forEach((item) => {
         count = count + item.credit;
-        price = price + item.price;
       });
 
       const totalRemaining = 20 - count;
@@ -35,13 +33,12 @@ const Cards = () => {
         alert("You do not have enough credit");
       } else {
         setTotalCredit(count);
-        setTotalPrice(price);
+        setTotalPrice(totalPrice + card.price);
         setRemaining(totalRemaining);
         setSelectCard([...selectCard, card]);
       }
     }
   };
-
   return (
     <div className="">
       <h1 className="text-center text-3xl font-bold mt-4">
@@ -51,12 +48,12 @@ const Cards = () => {
         <div className="grid grid-cols-3 gap-3  w-9/12">
           {cards.map((card, idx) => (
             <div className="" key={idx}>
-              <div className="border p-4 rounded-md bg-white h-full flex flex-col justify-around">
+              <div className=" p-4 rounded-md bg-white h-full flex flex-col justify-around">
                 <div className="">
                   <img className="w-full" src={card.cover} alt="" />
                 </div>
                 <h3 className="text-lg font-semibold pt-2">{card.title}</h3>
-                <p className="text-sm">
+                <p className="text-base text-[#1C1B1B99]">
                   <small>{card.description}</small>
                 </p>
                 <div className="bottom-4">
@@ -66,14 +63,14 @@ const Cards = () => {
                       <span> Price : {card.price}</span>
                     </div>
                     <div className="flex items-center ml-3">
-                      <img className="w-4 h-4" src={Frame} alt="" />
+                      <img className="w-4 h-4 mr-1" src={Frame} alt="" />
                       <span>Credit : {card.credit} hr</span>
                     </div>
                   </div>
                 </div>
                 <button
                   onClick={() => handleSelect(card)}
-                  className="w-full text-white py-2 rounded-md mt-2 bg-[#2F80ED]"
+                  className="w-full text-white py-2 rounded-md mt-2 bg-[#2F80ED] hover:bg-[#3445ff]"
                 >
                   Select
                 </button>
