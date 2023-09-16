@@ -3,7 +3,7 @@ import { useState } from "react";
 import Cart from "../Cart/Cart";
 import Dollar from "../../assets/dollar-sign 1.png";
 import Frame from "../../assets/Frame.png";
-import Swal from 'sweetalert2'
+import toast, { Toaster } from 'react-hot-toast';
 
 const Cards = () => {
   const [cards, setCards] = useState([]);
@@ -21,12 +21,7 @@ const Cards = () => {
     const isExist = selectCard.find((item) => item.id == card.id);
     let count = card.credit;
     if (isExist) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Sorry',
-        text: 'You have already selected this Course Please choose another one.',
-        footer: '<a href="">Report</a>'
-      });
+      toast.error("You have already selected this Course Please choose another one.");
     } else {
       selectCard.forEach((item) => {
         count = count + item.credit;
@@ -34,12 +29,7 @@ const Cards = () => {
 
       const totalRemaining = 20 - count;
       if (count > 20) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Sorry',
-          text: "You don't have enough credit.",
-          footer: '<a href="">Report</a>'
-        });
+        toast.error("You don't have enough credit.");
       } else {
         setTotalCredit(count);
         setTotalPrice(totalPrice + card.price);
@@ -50,6 +40,7 @@ const Cards = () => {
   };
   return (
     <div className="">
+    <div><Toaster/></div>
       <h1 className="text-center md:text-2xl lg:text-3xl font-bold mt-2 md:mt-4">
         Course Registration
       </h1>
